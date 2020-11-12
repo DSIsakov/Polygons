@@ -4,6 +4,7 @@ using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace WindowsFormsApp5
 {
@@ -49,7 +50,15 @@ namespace WindowsFormsApp5
         }
         public override bool Check(int x, int y)
         {
-            if (x0 - (r / 2) < x && x0 + (r / 2) > x && y0 - r < y && y0 + (r / 2) > y) return true;
+            int xd = x;
+            int xa = x0;
+            int xb = x0 - r / 2;
+            int xc = x0 + r / 2;
+            int yd = y;
+            int ya = y0 - r / 2;
+            int yb = y0 + r / 2;
+            int yc = y0 + r / 2;
+            if ((((xd - xa) * (yb - ya) - (yd - ya) * (xb - xa)) * ((xc - xa) * (yb - ya) - (yc - ya) * (xb - xa)) >= 0) && (((xd - xb) * (yc - yb) - (yd - yb) * (xc - xb)) * ((xa - xb) * (yc - yb) - (ya - yb) * (xc - xb)) >= 0) && (((xd - xc) * (ya - yc) - (yd - yc) * (xa - xc)) * ((xb - xc) * (ya - yc) - (yb - yc) * (xa - xc)) >= 0)) return true;
             else return false;
         }
     }
@@ -62,7 +71,7 @@ namespace WindowsFormsApp5
         }
         public override bool Check(int x, int y)
         {
-            if (Math.Sqrt(Math.Pow(x - x0 - (r / 2), 2) + Math.Pow(y - y0 - (r / 2), 2)) < r) return true;
+            if (Math.Pow(x - x0, 2) + Math.Pow(y - y0, 2) <= Math.Pow(r / 2, 2)) return true;
             else return false;
         }
     }

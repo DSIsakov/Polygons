@@ -12,12 +12,13 @@ namespace WindowsFormsApp5
 {
     public partial class Form1 : Form
     {
+        List<Node> nodes = new List<Node>();
         bool draw;
         bool drag;
         int dx;
         int dy;
         int nShape;
-        Node node;
+        Node thisNode;
         public Form1()
         {
             InitializeComponent();
@@ -31,35 +32,47 @@ namespace WindowsFormsApp5
         private void triangleToolStripMenuItem_Click(object sender, EventArgs e) { nShape = 0; }
         private void circleToolStripMenuItem_Click(object sender, EventArgs e) { nShape = 1; }
         private void squareToolStripMenuItem_Click(object sender, EventArgs e) { nShape = 2; }
-        private void Form1_Paint(object sender, PaintEventArgs e) { if (draw) node.DrawNode(e.Graphics); }
+        private void Form1_Paint(object sender, PaintEventArgs e) { foreach (Node node in nodes) { node.DrawNode(e.Graphics); }; }
         private void Form1_MouseDown(object sender, MouseEventArgs e)
         {
-            if (draw && node.Check(e.X, e.Y) && e.Button == MouseButtons.Left)
+            foreach (Node node in nodes)
             {
-                dx = e.X - node.SetX;
-                dy = e.Y - node.SetY;
+                if (node.Check(e.X, e.Y))
+                {
+                    thisNode = node;
+                }
+            }
+            if (draw && thisNode.Check(e.X, e.Y) && e.Button == MouseButtons.Left)
+            {
+                dx = e.X - thisNode.SetX;
+                dy = e.Y - thisNode.SetY;
                 drag = true;
-            } 
-            else if (draw && node.Check(e.X, e.Y) && e.Button == MouseButtons.Right)
+            }
+            else if (draw && thisNode.Check(e.X, e.Y) && e.Button == MouseButtons.Right)
             {
-                draw = false;
-                node = null;
+                nodes.Remove(thisNode);
                 Refresh();
             }
             else
             {
-                draw = true;
-                switch (nShape)
+                if (e.Button == MouseButtons.Left)
                 {
-                    case 0:
-                        node = new Triangle(e.X, e.Y);
-                        break;
-                    case 1:
-                        node = new Circle(e.X, e.Y);
-                        break;
-                    case 2:
-                        node = new Square(e.X, e.Y);
-                        break;
+                    draw = true;
+                    switch (nShape)
+                    {
+                        case 0:
+                            thisNode = new Triangle(e.X, e.Y);
+                            nodes.Add(thisNode);
+                            break;
+                        case 1:
+                            thisNode = new Circle(e.X, e.Y);
+                            nodes.Add(thisNode);
+                            break;
+                        case 2:
+                            thisNode = new Square(e.X, e.Y);
+                            nodes.Add(thisNode);
+                            break;
+                    }
                 }
             }
         }
@@ -67,8 +80,8 @@ namespace WindowsFormsApp5
         {
             if (drag)
             {
-                node.SetX = e.X - dx;
-                node.SetY = e.Y - dy;
+                thisNode.SetX = e.X - dx;
+                thisNode.SetY = e.Y - dy;
                 Refresh();
             }
         }
