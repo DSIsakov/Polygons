@@ -12,14 +12,19 @@ namespace Polygon
     {
         protected int x0;
         protected int y0;
-        public bool flag;
+        public bool flag { get; set; }
+        public bool anyLine { get; set; }
         public static int r { get; set; }
         public static Color color { get; set; }
+        public bool drag { get; set; }
+        public int dx { get; set; }
+        public int dy { get; set; }
         public Node(int x, int y)
         {
             x0 = x;
             y0 = y;
             flag = false;
+            anyLine = false;
         }
         static Node()
         {
