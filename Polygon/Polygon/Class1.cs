@@ -29,7 +29,7 @@ namespace Polygon
         static Node()
         {
             r = 50;
-            color = Color.Black;
+            color = Color.Red;
         }
         public int SetX
         {
