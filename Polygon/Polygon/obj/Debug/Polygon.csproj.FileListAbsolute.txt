@@ -8,3 +8,4 @@ C:\Users\diasi\source\repos\Polygon\Polygon\obj\Debug\Polygon.csproj.GenerateRes
 C:\Users\diasi\source\repos\Polygon\Polygon\obj\Debug\Polygon.csproj.CoreCompileInputs.cache
 C:\Users\diasi\source\repos\Polygon\Polygon\obj\Debug\Polygon.exe
 C:\Users\diasi\source\repos\Polygon\Polygon\obj\Debug\Polygon.pdb
+C:\Users\diasi\source\repos\Polygon\Polygon\obj\Debug\Polygon.Form2.resources

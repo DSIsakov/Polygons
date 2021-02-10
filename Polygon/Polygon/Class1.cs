@@ -26,10 +26,11 @@ namespace Polygon
             flag = false;
             anyLine = false;
         }
+
         static Node()
         {
+            color = Color.Turquoise;
             r = 50;
-            color = Color.Red;
         }
         public int SetX
         {
