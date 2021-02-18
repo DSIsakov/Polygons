@@ -9,3 +9,14 @@ C:\Users\diasi\source\repos\Polygon\Polygon\obj\Debug\Polygon.csproj.CoreCompile
 C:\Users\diasi\source\repos\Polygon\Polygon\obj\Debug\Polygon.exe
 C:\Users\diasi\source\repos\Polygon\Polygon\obj\Debug\Polygon.pdb
 C:\Users\diasi\source\repos\Polygon\Polygon\obj\Debug\Polygon.Form2.resources
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\obj\Debug\Polygon.csprojAssemblyReference.cache
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\obj\Debug\Polygon.Form1.resources
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\obj\Debug\Polygon.Form2.resources
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\obj\Debug\Polygon.Properties.Resources.resources
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\obj\Debug\Polygon.csproj.GenerateResource.cache
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\obj\Debug\Polygon.csproj.CoreCompileInputs.cache
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\obj\Debug\Polygon.exe
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\obj\Debug\Polygon.pdb
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\bin\Debug\Polygon.exe.config
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\bin\Debug\Polygon.exe
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\bin\Debug\Polygon.pdb

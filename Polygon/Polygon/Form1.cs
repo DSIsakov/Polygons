@@ -212,7 +212,7 @@ namespace Polygon
                 Refresh();
             }
         }
-        /*private void timer1_Tick(object sender, EventArgs e)
+        private void timer1_Tick(object sender, EventArgs e)
         {
             int k;
             foreach (Node node in nodes)
@@ -233,18 +233,18 @@ namespace Polygon
                 }
             }
             Refresh();
-        }*/
-        private void timer1_Tick(object sender, EventArgs e)
-        {
-            int k;
-            k = random.Next(-5, 5);
-            foreach (Node node in nodes)
-            {
-                node.SetX += k;
-                node.SetY += k;
-            }
-            Refresh();
         }
+        //private void timer1_Tick(object sender, EventArgs e)
+        //{
+        //    int k;
+        //    k = random.Next(-5, 5);
+        //    foreach (Node node in nodes)
+        //    {
+        //        node.SetX += k;
+        //        node.SetY += k;
+        //    }
+        //    Refresh();
+        //}
 
         private void speedToolStripMenuItem_Click(object sender, EventArgs e)
         {
