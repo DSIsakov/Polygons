@@ -19,7 +19,6 @@ namespace Polygon
             this.t = t;
             trackBar1.Value = t;
         }
-
         private void trackBar1_Scroll(object sender, EventArgs e)
         {
             t = trackBar1.Value;

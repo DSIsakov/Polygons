@@ -20,3 +20,4 @@ C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\obj\Debug\Polygon.pdb
 C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\bin\Debug\Polygon.exe.config
 C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\bin\Debug\Polygon.exe
 C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\bin\Debug\Polygon.pdb
+C:\Users\diasi\Documents\GitHub\Polygons\Polygon\Polygon\obj\Debug\Polygon.Form3.resources

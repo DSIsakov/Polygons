@@ -36,7 +36,7 @@ namespace Polygon
             // trackBar1
             // 
             this.trackBar1.LargeChange = 0;
-            this.trackBar1.Location = new System.Drawing.Point(12, 88);
+            this.trackBar1.Location = new System.Drawing.Point(12, 51);
             this.trackBar1.Maximum = 1000;
             this.trackBar1.Minimum = 100;
             this.trackBar1.Name = "trackBar1";

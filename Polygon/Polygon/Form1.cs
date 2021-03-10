@@ -14,8 +14,10 @@ namespace Polygon
         List<Node> nodes = new List<Node>();
         int nShape;
         bool ifDragNode;
-        Random random;
+        static Random random;
         Node node0;
+        int Radius;
+        Form3 boo;
         public Form1()
         {
             InitializeComponent();
@@ -23,7 +25,7 @@ namespace Polygon
             random = new Random();
             ifDragNode = false;
             node0 = new Triangle(0, 0);
-
+            Radius = Node.r;
         }
         private void Form1_Load(object sender, EventArgs e) { DoubleBuffered = true; }
         private void triangleToolStripMenuItem_Click(object sender, EventArgs e) { nShape = 0; }
@@ -90,7 +92,6 @@ namespace Polygon
             {
                 return true;
             }
-            
             return false;
         }
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -190,17 +191,9 @@ namespace Polygon
                         k--;
                     }
                 }
-                //for (int i = 0; i < nodes.Count; i++)
-                //{
-                //    if (IsInsidePolygon(nodes[i].SetX, nodes[i].SetY))
-                //    {
-                //        nodes.Remove(nodes[i]);
-                //    }
-                //}
             }
             Refresh();
         }
-
         private void nodeColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
             ColorDialog colorDialog = new ColorDialog();
@@ -234,23 +227,31 @@ namespace Polygon
             }
             Refresh();
         }
-        //private void timer1_Tick(object sender, EventArgs e)
-        //{
-        //    int k;
-        //    k = random.Next(-5, 5);
-        //    foreach (Node node in nodes)
-        //    {
-        //        node.SetX += k;
-        //        node.SetY += k;
-        //    }
-        //    Refresh();
-        //}
-
         private void speedToolStripMenuItem_Click(object sender, EventArgs e)
         {
             Form2 form = new Form2(timer1.Interval);
             form.ShowDialog();
             timer1.Interval = form.t;
+        }
+        private void RadiusDelegate(object sender, RadiusEventArgs e)
+        {
+            Radius = e.R;
+            Node.r = Radius;
+            Refresh();
+        }
+        private void radiusToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            if (boo == null || boo.IsDisposed)
+            {
+                boo = new Form3(Radius);
+                boo.Show();
+                boo.RCh += RadiusDelegate;
+            }
+            else
+            {
+                boo.Show();
+                boo.RCh += RadiusDelegate;
+            }
         }
     }
 }
