@@ -88,10 +88,7 @@ namespace Polygon
                     break;
                 }
             }
-            if (!node0.anyLine)
-            {
-                return true;
-            }
+            if (!node0.anyLine) return true;
             return false;
         }
         private void Form1_MouseDown(object sender, MouseEventArgs e)
@@ -174,10 +171,7 @@ namespace Polygon
         }
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            foreach (Node node in nodes)
-            {
-                node.drag = false;
-            }
+            foreach (Node node in nodes) { node.drag = false; }
             if (nodes.Count > 2)
             {
                 int i = 0;
@@ -252,6 +246,7 @@ namespace Polygon
                 boo.Show();
                 boo.RCh += RadiusDelegate;
             }
+            boo.Focus();
         }
     }
 }
