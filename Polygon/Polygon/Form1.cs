@@ -1,30 +1,28 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.Drawing;
 using System.Linq;
-using System.Text;
 using System.Windows.Forms;
+using System.IO;
+using System.Runtime.Serialization.Formatters.Binary;
 
 namespace Polygon
 {
     public partial class Form1 : Form
     {
-        List<Node> nodes = new List<Node>();
+        List<Node> nodes = new();
         int nShape;
         bool ifDragNode;
         static Random random;
-        Node node0;
         int Radius;
         Form3 boo;
+        string path;
         public Form1()
         {
             InitializeComponent();
             nShape = 0;
             random = new Random();
             ifDragNode = false;
-            node0 = new Triangle(0, 0);
             Radius = Node.r;
         }
         private void Form1_Load(object sender, EventArgs e) { DoubleBuffered = true; }
@@ -65,8 +63,7 @@ namespace Polygon
         }
         private bool IsInsidePolygon(int x, int y)
         {
-            node0.SetX = x;
-            node0.SetY = y;
+            Triangle node0 = new(x, y);
             int up;
             int down;
             node0.anyLine = false;
@@ -171,7 +168,7 @@ namespace Polygon
         }
         private void Form1_MouseUp(object sender, MouseEventArgs e)
         {
-            foreach (Node node in nodes) { node.drag = false; }
+            foreach (Node node in nodes) node.drag = false;
             if (nodes.Count > 2)
             {
                 int i = 0;
@@ -190,7 +187,7 @@ namespace Polygon
         }
         private void nodeColorToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            ColorDialog colorDialog = new ColorDialog();
+            ColorDialog colorDialog = new();
             colorDialog.AllowFullOpen = false;
             colorDialog.Color = Node.color;
             if (colorDialog.ShowDialog() == DialogResult.OK)
@@ -223,7 +220,7 @@ namespace Polygon
         }
         private void speedToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            Form2 form = new Form2(timer1.Interval);
+            Form2 form = new(timer1.Interval);
             form.ShowDialog();
             timer1.Interval = form.t;
         }
@@ -247,6 +244,48 @@ namespace Polygon
                 boo.RCh += RadiusDelegate;
             }
             boo.Focus();
+        }
+        private void openToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            OpenFileDialog open = new() { InitialDirectory = @"..\..\Images", Filter = "Binary files(*.dat) | *.dat" };
+            if (open.ShowDialog() == DialogResult.OK)
+            {
+                Stream stream = open.OpenFile();
+                BinaryFormatter bf = new();
+                List<object> info = (List<object>)bf.Deserialize(stream);
+                nodes.Clear();
+                if (info.Count > 2) for (int i = 0; i < info.Count - 2; i++) nodes.Add((Node)info[i]);
+                Node.color = (Color)info[info.Count - 2];
+                Node.r = (int)info[info.Count - 1];
+                stream.Close();
+                Refresh();
+            }
+        }
+        private void saveToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            SaveFileDialog save = new() { InitialDirectory = @"..\..\Images", Filter = "Binary files(*.dat) | *.dat" };
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                Stream stream = save.OpenFile();
+                BinaryFormatter bf = new();
+                List<object> info = new();
+                foreach (Node node in nodes) info.Add(node);
+                info.Add(Node.color);
+                info.Add(Node.r);
+                bf.Serialize(stream, info);
+                stream.Close();
+                Refresh();
+            }
+        }
+        private void newToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            nodes.Clear();
+            Node.color = Color.Turquoise;
+            Node.r = 50;
+            timer1.Stop();
+            timer1.Interval = 100;
+            nShape = 0;
+            Refresh();
         }
     }
 }

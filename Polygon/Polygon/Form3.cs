@@ -22,10 +22,7 @@ namespace Polygon
         private void numericUpDown1_ValueChanged(object sender, EventArgs e)
         {
             int v = Convert.ToInt32(numericUpDown1.Value);
-            if (RCh != null)
-            {
-                RCh(this, new RadiusEventArgs(v));
-            }
+            RCh?.Invoke(this, new RadiusEventArgs(v));
         }
     }
     public class RadiusEventArgs : EventArgs

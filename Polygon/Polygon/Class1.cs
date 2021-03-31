@@ -8,6 +8,7 @@ using System.Xml.Linq;
 
 namespace Polygon
 {
+    [Serializable]
     abstract class Node
     {
         protected int x0;
@@ -45,6 +46,7 @@ namespace Polygon
         abstract public void DrawNode(Graphics g);
         abstract public bool Check(int x, int y);
     }
+    [Serializable]
     class Triangle : Node
     {
         public Triangle(int x, int y) : base(x, y) { }
@@ -70,6 +72,7 @@ namespace Polygon
             else return false;
         }
     }
+    [Serializable]
     class Circle : Node
     {
         public Circle(int x, int y) : base(x, y) { }
@@ -83,6 +86,7 @@ namespace Polygon
             else return false;
         }
     }
+    [Serializable]
     class Square : Node
     {
         public Square(int x, int y) : base(x, y) { }
