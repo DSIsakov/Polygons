@@ -16,6 +16,8 @@ namespace Polygon
         static Random random;
         int Radius;
         Form3 boo;
+        bool isOpened;
+        bool isChanged;
         string path;
         public Form1()
         {
@@ -24,6 +26,8 @@ namespace Polygon
             random = new Random();
             ifDragNode = false;
             Radius = Node.r;
+            isOpened = false;
+            isChanged = false;
         }
         private void Form1_Load(object sender, EventArgs e) { DoubleBuffered = true; }
         private void triangleToolStripMenuItem_Click(object sender, EventArgs e) { nShape = 0; }
@@ -107,6 +111,7 @@ namespace Polygon
                         else
                         {
                             nodes.Remove(node);
+                            isChanged = true;
                             Refresh();
                             break;
                         }
@@ -134,6 +139,7 @@ namespace Polygon
                             nodes.Add(new Square(e.X, e.Y));
                             break;
                     }
+                    isChanged = true;
                     Refresh();
                 }
             }
@@ -151,6 +157,7 @@ namespace Polygon
                         nodes.Add(new Square(e.X, e.Y));
                         break;
                 }
+                isChanged = true;
                 Refresh();
             }
         }
@@ -162,6 +169,7 @@ namespace Polygon
                 {
                     node.SetX = e.X - node.dx;
                     node.SetY = e.Y - node.dy;
+                    isChanged = true;
                     Refresh();
                 }
             }
@@ -180,6 +188,7 @@ namespace Polygon
                         nodes.Remove(nodes[i]);
                         i--;
                         k--;
+                        isChanged = true;
                     }
                 }
             }
@@ -247,44 +256,96 @@ namespace Polygon
         }
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            OpenFileDialog open = new() { InitialDirectory = @"..\..\Images", Filter = "Binary files(*.dat) | *.dat" };
+            if (isChanged)
+            {
+                DialogResult result = MessageBox.Show("Save?", "", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    if (isOpened) Save(path);
+                    else
+                    {
+                        SaveFileDialog save = new SaveFileDialog() { InitialDirectory = @"..\..\Images", Filter = "Binary files(*.dat) | *.dat" };
+                        if (save.ShowDialog() == DialogResult.Yes) Save(save.FileName);
+                    }
+                }
+            }
+            OpenFileDialog open = new OpenFileDialog() { InitialDirectory = @"..\..\Images", Filter = "Binary files(*.dat) | *.dat" };
             if (open.ShowDialog() == DialogResult.OK)
             {
-                Stream stream = open.OpenFile();
-                BinaryFormatter bf = new();
-                List<object> info = (List<object>)bf.Deserialize(stream);
-                nodes.Clear();
-                if (info.Count > 2) for (int i = 0; i < info.Count - 2; i++) nodes.Add((Node)info[i]);
-                Node.color = (Color)info[info.Count - 2];
-                Node.r = (int)info[info.Count - 1];
-                stream.Close();
-                Refresh();
+                Open(open.FileName);
+                isOpened = true;
+                path = open.FileName;
             }
+            isChanged = false;
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            SaveFileDialog save = new() { InitialDirectory = @"..\..\Images", Filter = "Binary files(*.dat) | *.dat" };
-            if (save.ShowDialog() == DialogResult.OK)
-            {
-                Stream stream = save.OpenFile();
-                BinaryFormatter bf = new();
-                List<object> info = new();
-                foreach (Node node in nodes) info.Add(node);
-                info.Add(Node.color);
-                info.Add(Node.r);
-                bf.Serialize(stream, info);
-                stream.Close();
-                Refresh();
-            }
+            SaveFileDialog save = new SaveFileDialog() { InitialDirectory = @"..\..\Images", Filter = "Binary files(*.dat) | *.dat" };
+            if (save.ShowDialog() == DialogResult.OK) Save(save.FileName);
+            isChanged = false;
         }
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            if (isChanged)
+            {
+                DialogResult result = MessageBox.Show("Save?", "", MessageBoxButtons.YesNo);
+                if (result == DialogResult.Yes)
+                {
+                    if (isOpened) Save(path);
+                    else
+                    {
+                        SaveFileDialog save = new SaveFileDialog() { InitialDirectory = @"..\..\Images", Filter = "Binary files(*.dat) | *.dat" };
+                        if (save.ShowDialog() == DialogResult.Yes) Save(save.FileName);
+                    }
+                }
+            }
             nodes.Clear();
             Node.color = Color.Turquoise;
             Node.r = 50;
             timer1.Stop();
             timer1.Interval = 100;
             nShape = 0;
+            isChanged = false;
+            Refresh();
+        }
+        private void Form1_FormClosing(object sender, FormClosingEventArgs e)
+        {
+            if (isChanged)
+            {
+                DialogResult result = MessageBox.Show("Save?", "", MessageBoxButtons.YesNoCancel);
+                if (DialogResult.Yes == result)
+                {
+                    if (isOpened) Save(path);
+                    else
+                    {
+                        SaveFileDialog save = new SaveFileDialog() { InitialDirectory = @"..\..\Images", Filter = "Binary files(*.dat) | *.dat" };
+                        if (save.ShowDialog() == DialogResult.Yes) Save(save.FileName);
+                    }
+                }
+                else if (DialogResult.Cancel == result) e.Cancel = true;
+            }
+        }
+        private void Save(string path)
+        {
+            Stream stream = File.Open(path, FileMode.OpenOrCreate);
+            BinaryFormatter bf = new BinaryFormatter();
+            List<object> info = new List<object>();
+            foreach (Node node in nodes) info.Add(node);
+            info.Add(Node.color);
+            info.Add(Node.r);
+            bf.Serialize(stream, info);
+            stream.Close();
+        }
+        private void Open(string path)
+        {
+            Stream stream = File.Open(path, FileMode.Open);
+            BinaryFormatter bf = new BinaryFormatter();
+            List<object> info = (List<object>)bf.Deserialize(stream);
+            nodes.Clear();
+            if (info.Count > 2) for (int i = 0; i < info.Count - 2; i++) nodes.Add((Node)info[i]);
+            Node.color = (Color)info[info.Count - 2];
+            Node.r = (int)info[info.Count - 1];
+            stream.Close();
             Refresh();
         }
     }
