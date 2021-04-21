@@ -19,6 +19,8 @@ namespace Polygon
         bool isOpened;
         bool isChanged;
         string path;
+        Stack<XOperator> undo;
+        Stack<XOperator> redo;
         public Form1()
         {
             InitializeComponent();
@@ -28,6 +30,8 @@ namespace Polygon
             Radius = Node.r;
             isOpened = false;
             isChanged = false;
+            undo = new Stack<XOperator>();
+            redo = new Stack<XOperator>();
         }
         private void Form1_Load(object sender, EventArgs e) { DoubleBuffered = true; }
         private void triangleToolStripMenuItem_Click(object sender, EventArgs e) { nShape = 0; }
@@ -241,6 +245,9 @@ namespace Polygon
         }
         private void radiusToolStripMenuItem_Click(object sender, EventArgs e)
         {
+            undo.Push(new XRadius(Node.r));
+            isChanged = true;
+            redo.Clear();
             if (boo == null || boo.IsDisposed)
             {
                 boo = new Form3(Radius);
@@ -253,6 +260,7 @@ namespace Polygon
                 boo.RCh += RadiusDelegate;
             }
             boo.Focus();
+            Refresh();
         }
         private void openToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -275,14 +283,21 @@ namespace Polygon
                 Open(open.FileName);
                 isOpened = true;
                 path = open.FileName;
+                undo.Clear();
+                redo.Clear();
+                isChanged = false;
             }
-            isChanged = false;
         }
         private void saveToolStripMenuItem_Click(object sender, EventArgs e)
         {
             SaveFileDialog save = new SaveFileDialog() { InitialDirectory = @"..\..\Images", Filter = "Binary files(*.dat) | *.dat" };
-            if (save.ShowDialog() == DialogResult.OK) Save(save.FileName);
-            isChanged = false;
+            if (save.ShowDialog() == DialogResult.OK)
+            {
+                Save(save.FileName);
+                isChanged = false;
+                undo.Clear();
+                redo.Clear();
+            }
         }
         private void newToolStripMenuItem_Click(object sender, EventArgs e)
         {
@@ -306,6 +321,8 @@ namespace Polygon
             timer1.Interval = 100;
             nShape = 0;
             isChanged = false;
+            undo.Clear();
+            redo.Clear();
             Refresh();
         }
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
@@ -346,6 +363,30 @@ namespace Polygon
             Node.color = (Color)info[info.Count - 2];
             Node.r = (int)info[info.Count - 1];
             stream.Close();
+            Refresh();
+        }
+        private void Undo()
+        {
+            if (undo.Any())
+            {
+                XOperator s = undo.Pop();
+                s.Undo();
+                redo.Push(s);
+            }
+        }
+        private void Redo()
+        {
+            if (redo.Any())
+            {
+                XOperator s = redo.Pop();
+                s.Redo();
+                undo.Push(s);
+            }
+        }
+        private void Form1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.Modifiers == Keys.Control && e.KeyCode == Keys.R) Redo();
+            else if (e.Modifiers == Keys.Control && e.KeyCode == Keys.Z) Undo();
             Refresh();
         }
     }

@@ -61,7 +61,7 @@
             this.fileToolStripMenuItem});
             this.menuStrip1.Location = new System.Drawing.Point(0, 0);
             this.menuStrip1.Name = "menuStrip1";
-            this.menuStrip1.Size = new System.Drawing.Size(1019, 48);
+            this.menuStrip1.Size = new System.Drawing.Size(1019, 40);
             this.menuStrip1.TabIndex = 0;
             this.menuStrip1.Text = "menuStrip1";
             // 
@@ -72,7 +72,7 @@
             this.circleToolStripMenuItem,
             this.squareToolStripMenuItem});
             this.nodeToolStripMenuItem.Name = "nodeToolStripMenuItem";
-            this.nodeToolStripMenuItem.Size = new System.Drawing.Size(94, 44);
+            this.nodeToolStripMenuItem.Size = new System.Drawing.Size(94, 38);
             this.nodeToolStripMenuItem.Text = "Node";
             // 
             // triangleToolStripMenuItem
@@ -99,7 +99,7 @@
             // nodeColorToolStripMenuItem
             // 
             this.nodeColorToolStripMenuItem.Name = "nodeColorToolStripMenuItem";
-            this.nodeColorToolStripMenuItem.Size = new System.Drawing.Size(151, 44);
+            this.nodeColorToolStripMenuItem.Size = new System.Drawing.Size(151, 38);
             this.nodeColorToolStripMenuItem.Text = "NodeColor";
             this.nodeColorToolStripMenuItem.Click += new System.EventHandler(this.nodeColorToolStripMenuItem_Click);
             // 
@@ -107,7 +107,7 @@
             // 
             this.startToolStripMenuItem.BackColor = System.Drawing.Color.Lime;
             this.startToolStripMenuItem.Name = "startToolStripMenuItem";
-            this.startToolStripMenuItem.Size = new System.Drawing.Size(83, 44);
+            this.startToolStripMenuItem.Size = new System.Drawing.Size(83, 38);
             this.startToolStripMenuItem.Text = "Start";
             this.startToolStripMenuItem.Click += new System.EventHandler(this.startToolStripMenuItem_Click);
             // 
@@ -115,21 +115,21 @@
             // 
             this.stopToolStripMenuItem.BackColor = System.Drawing.Color.Red;
             this.stopToolStripMenuItem.Name = "stopToolStripMenuItem";
-            this.stopToolStripMenuItem.Size = new System.Drawing.Size(83, 44);
+            this.stopToolStripMenuItem.Size = new System.Drawing.Size(83, 38);
             this.stopToolStripMenuItem.Text = "Stop";
             this.stopToolStripMenuItem.Click += new System.EventHandler(this.stopToolStripMenuItem_Click);
             // 
             // speedToolStripMenuItem
             // 
             this.speedToolStripMenuItem.Name = "speedToolStripMenuItem";
-            this.speedToolStripMenuItem.Size = new System.Drawing.Size(102, 44);
+            this.speedToolStripMenuItem.Size = new System.Drawing.Size(102, 38);
             this.speedToolStripMenuItem.Text = "Speed";
             this.speedToolStripMenuItem.Click += new System.EventHandler(this.speedToolStripMenuItem_Click);
             // 
             // radiusToolStripMenuItem
             // 
             this.radiusToolStripMenuItem.Name = "radiusToolStripMenuItem";
-            this.radiusToolStripMenuItem.Size = new System.Drawing.Size(105, 44);
+            this.radiusToolStripMenuItem.Size = new System.Drawing.Size(105, 38);
             this.radiusToolStripMenuItem.Text = "Radius";
             this.radiusToolStripMenuItem.Click += new System.EventHandler(this.radiusToolStripMenuItem_Click);
             // 
@@ -140,7 +140,7 @@
             this.saveToolStripMenuItem,
             this.newToolStripMenuItem});
             this.fileToolStripMenuItem.Name = "fileToolStripMenuItem";
-            this.fileToolStripMenuItem.Size = new System.Drawing.Size(72, 44);
+            this.fileToolStripMenuItem.Size = new System.Drawing.Size(72, 38);
             this.fileToolStripMenuItem.Text = "File";
             // 
             // openToolStripMenuItem
@@ -180,6 +180,7 @@
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.Form1_FormClosing);
             this.Load += new System.EventHandler(this.Form1_Load);
             this.Paint += new System.Windows.Forms.PaintEventHandler(this.Form1_Paint);
+            this.KeyDown += new System.Windows.Forms.KeyEventHandler(this.Form1_KeyDown);
             this.MouseDown += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseDown);
             this.MouseMove += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseMove);
             this.MouseUp += new System.Windows.Forms.MouseEventHandler(this.Form1_MouseUp);
