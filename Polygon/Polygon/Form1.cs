@@ -205,6 +205,8 @@ namespace Polygon
             colorDialog.Color = Node.color;
             if (colorDialog.ShowDialog() == DialogResult.OK)
             {
+                undo.Push(new XColor(Node.color));
+                redo.Clear();
                 Node.color = colorDialog.Color;
                 Refresh();
             }
